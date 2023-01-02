@@ -1,16 +1,17 @@
 const mongoose = require("mongoose");
 const CONFIG = require("../config/config");
+const logger = require("../logging/logger");
 
 function connectToDb() {
+    mongoose.set("strictQuery", false);
     mongoose.connect(CONFIG.MONGODB_URL);
 
     mongoose.connection.on("connected", () => {
-        console.log("Mongodb connected successfully!");
+        logger.info("Mongodb connected successfully!");
     });
 
     mongoose.connection.on("error", (err) => {
-        console.log("An error occured!");
-        console.log(err);
+        logger.error(err);
     });
 }
 
