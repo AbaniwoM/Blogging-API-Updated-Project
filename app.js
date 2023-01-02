@@ -2,7 +2,12 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
+const { requiresAuth } = require("express-openid-connect");
+
 const logger = require("./logging/logger");
+
+const authMiddleware = require("./auth/auth0");
+
 const CONFIG = require("./config/config");
 const connectToDb = require("./db/mongodb");
 
@@ -18,6 +23,9 @@ connectToDb();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+// auth router attaches /login, /logout, and /callback routes to the baseURL
+app.use(authMiddleware);
+
 const limiter = rateLimit({
 	windowMs: 15 * 60 * 1000, // 15 minutes
 	max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
@@ -31,7 +39,7 @@ app.use(limiter);
 // Security middleware
 app.use(helmet());
 
-app.use("/api/v1/posts", postRouter);
+app.use("/api/v1/posts", requiresAuth(), postRouter);
 
 app.get("/", (req, res) => {
     res.send("Hello Bloggingapi");
