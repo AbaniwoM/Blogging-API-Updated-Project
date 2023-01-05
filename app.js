@@ -2,7 +2,8 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
-const { requiresAuth } = require("express-openid-connect");
+// const { requiresAuth } = require("express-openid-connect");
+const verify = require("./auth/verifyToken");
 
 const logger = require("./logging/logger");
 
@@ -15,6 +16,7 @@ const app = express();
 
 //Routes
 const postRouter = require("./routes/posts_routes");
+const userRoute = require("./auth/auth");
 
 //Connect to MongoDB Database
 connectToDb();
@@ -39,7 +41,9 @@ app.use(limiter);
 // Security middleware
 app.use(helmet());
 
-app.use("/api/v1/posts", requiresAuth(), postRouter);
+// requiresAuth()
+app.use("/api/v1/posts", verify, postRouter);
+app.use("/api/users/", userRoute);
 
 app.get("/", (req, res) => {
     res.send("Hello Bloggingapi");
