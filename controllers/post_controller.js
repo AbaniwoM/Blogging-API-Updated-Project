@@ -1,4 +1,5 @@
 const postModel = require('../models/posts');
+const logger = require("../logging/logger");
 
 function getAllPosts(req, res) {
     postModel.find()
@@ -6,7 +7,7 @@ function getAllPosts(req, res) {
             res.send(posts);
         })
         .catch(err => {
-            console.log(err)
+            logger.error(err)
             res.send(err);
         })
 }
@@ -18,7 +19,7 @@ function getPostByID(req, res) {
             res.status(200).send(post);
         })
         .catch(err => {
-            console.log(err)
+            logger.error(err)
             res.status(404).send(err);
         });
 }
@@ -31,7 +32,7 @@ function addPost(req, res) {
             res.status(201).send(post);
         })
         .catch(err => {
-            console.log(err)
+            logger.error(err)
             res.status(500).send(err);
         })
 }
@@ -45,7 +46,7 @@ function updatePost(req, res) {
             res.status(200).send(newPost);
         })
         .catch(err => {
-            console.log(err);
+            logger.error(err);
             res.status(500).send(err);
         })
 }
@@ -57,7 +58,7 @@ function deletePostByID(req, res) {
             res.status(200).send(post);
         })
         .catch(err => {
-            console.log(err)
+            logger.error(err)
             res.status(500).send(err);
         })
 }
