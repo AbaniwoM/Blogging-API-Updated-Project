@@ -1,8 +1,8 @@
-## API STRUCTURE (Blogging API Project)
+## API STRUCTURE (Blogging API v1)
 
 
 * GET / (unprotected) ===> Home route to display Blog home content.
-* GET /login (unprotected) ===> Authenticate new user. Use SSO.
+* GET /login (protected) ===> Authenticate new user with JWT (Use of SSO to be updated).
 * GET /logout (unprotected) ===> Logout a user.
 
 ### Blog API (Post Routes)
@@ -25,15 +25,19 @@
 * dotenv
 * ejs
 * joi
+* JWT
 
 ## To start the server
 - run `npm run dev`
 
 ## Hosted link 
-- 
+- https://elated-sweatpants-bear.cyclic.app/
+
+
+## USER ROUTE
 
 ## Register User
-- Route: /register
+- Route: /api/v1/users/register
 - Method: POST
 - Body:
 ```
@@ -61,7 +65,7 @@ Success
 ```
 
 ## Login User
-- Route: /login
+- Route: /api/v1/users/login
 - Method: POST
 - Header
     - Content-Type: application/json
@@ -82,3 +86,66 @@ Success
 
 `Note: token is being updated after 1hr`
 
+## POST ROUTE
+
+## Home Request
+- Route: /
+- Method: GET
+
+## Get All Posts
+- Route: /api/v1/posts
+- Method: GET
+- Header
+    - Content-Type: application/json
+    - auth-token: (token given) 
+    
+`Note: token is being updated after 1hr`
+
+## Add a Post
+- Route: /api/v1/posts
+- Method: POST
+- Header
+    - Content-Type: application/json
+    - auth-token: (token given) 
+    
+`Note: token is being updated after 1hr`
+- Body:
+```
+{
+  "title": "Chemicals",
+  "description": "Study of CHEM properties of matter and",
+  "author": "Bristeny Kayi",
+  "body": "structure of chems, objects, props, maintenance",
+  "year": 2022
+}
+```
+ 
+## Update Post by ID
+- Route: /api/v1/posts/:id
+- Method: PUT
+- Header
+    - Content-Type: application/json
+    - auth-token: (token given) 
+    
+`Note: token is being updated after 1hr`
+
+## Get Post by ID
+- Route: /api/v1/posts/:id
+- Method: GET
+- Header
+    - Content-Type: application/json
+    - auth-token: (token given) 
+    
+`Note: token is being updated after 1hr`
+
+## Delete Post by ID
+- Route: /api/v1/posts/:id
+- Method: DELETE
+- Header
+    - Content-Type: application/json
+    - auth-token: (token given) 
+    
+`Note: token is being updated after 1hr`
+
+## Contributor
+- Michael Abaniwo
