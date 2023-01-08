@@ -43,7 +43,7 @@ app.use(helmet());
 
 // requiresAuth()
 app.use("/api/v1/posts", verify, postRouter);
-app.use("/api/users/", userRoute);
+app.use("/api/v1/users/", userRoute);
 
 app.get("/", (req, res) => {
     res.send("Hello Bloggingapi");

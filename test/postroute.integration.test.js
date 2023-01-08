@@ -27,6 +27,8 @@ describe("Integration tests for the posts API", () => {
        )
 
        expect(statusCode).toBe(200);
+
+       done()
     });
 
 });
